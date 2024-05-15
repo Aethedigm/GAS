@@ -31,5 +31,7 @@ Retrieves an array of all GAS categories
    1. Allow HTTPS
    2. Allow restricting characters
    3. Allow setting result limits
+   4. Allow disabling GAS creation at runtime
 3. Save state
 4. Load save state
+5. Load GAS listing
