@@ -1,4 +1,4 @@
-package main
+package gas
 
 import "sync"
 
@@ -68,7 +68,7 @@ func (t *trie) retrieve(word string) []*TrieResult {
 	return node.collectAll()
 }
 
-type GasResult struct {
+type ResultResponse struct {
 	Query   string        `json:"query"`
 	Results []*TrieResult `json:"results"`
 }
@@ -80,16 +80,16 @@ func (g *GAS) AddResult(key, value string) {
 	g.Node.insert(key, value)
 }
 
-func (g *GAS) GetResults(query string) GasResult {
+func (g *GAS) GetResults(query string) ResultResponse {
 	g.Lock.RLock()
 	defer g.Lock.RUnlock()
 
 	results := g.Node.retrieve(query)
 
-	response := GasResult{
+	rr := ResultResponse{
 		Query:   query,
 		Results: results,
 	}
 
-	return response
+	return rr
 }

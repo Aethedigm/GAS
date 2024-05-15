@@ -4,16 +4,17 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"log"
+	"main/gas"
 	"net/http"
 	"strconv"
 )
 
 const PORT int = 6605
 
-var GASSES map[string]*GAS
+var GASSES map[string]*gas.GAS
 
 func main() {
-	GASSES = make(map[string]*GAS)
+	GASSES = make(map[string]*gas.GAS)
 
 	Serve()
 }
