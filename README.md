@@ -13,14 +13,17 @@ that you might want.
 
 #### GAS exposes 4 routes
 - Add Result
-- - [POST] ( "/" ) `{ "gas": "XXX", "key": "YYY", "value": "ZZZ" }` Adds a value to a given key inside of the provided
-    GAS, assuming the GAS exists. Creates the key if it didn't exist. Will not create a GAS.
+- - [POST] ( "/" ) `{ "gas": "XXX", "key": "YYY", "value": "ZZZ" }`  
+Adds a value to a given key inside of the provided GAS, assuming the GAS exists. Creates the key if it didn't exist. Will not create a GAS.
 - Get Result
-- - [GET] ( "/?gas=XXX&key=YYY" ) Retrieves all matching words to the prefix provided, along with their values.
+- - [GET] ( "/?gas=XXX&key=YYY" )  
+Retrieves all matching words to the prefix provided, along with their values.
 - Add Gas
-- - [POST] ( "/gas" ) `{ "gas": "XXX" }` Allows the user to create a new GAS category for use
+- - [POST] ( "/gas" ) `{ "gas": "XXX" }`  
+Allows the user to create a new GAS category for use
 - Get Gas 
-- - [GET] ( "/gas" ) Retrieves an array of all GAS categories
+- - [GET] ( "/gas" )  
+Retrieves an array of all GAS categories
 
 #### TODO
 1. Replace all maps with rune arrays
