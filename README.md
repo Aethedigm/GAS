@@ -12,17 +12,17 @@ each other. You can easily maintain separate information for users, documents, p
 that you might want.
 
 #### GAS exposes 4 routes
-- Add Result
-- - [POST] ( "/" ) `{ "gas": "XXX", "key": "YYY", "value": "ZZZ" }`  
-Adds a value to a given key inside of the provided GAS, assuming the GAS exists. Creates the key if it didn't exist. Will not create a GAS.
-- Get Result
-- - [GET] ( "/?gas=XXX&key=YYY" )  
+- Add Result  
+[POST] ( "/" ) `{ "gas": "XXX", "key": "YYY", "value": "ZZZ" }`  
+Adds a value to a given key inside of the provided GAS, assuming the GAS exists. Creates the key if it didn't exist. Will not create a GAS.  
+- Get Result  
+[GET] ( "/?gas=XXX&key=YYY" )  
 Retrieves all matching words to the prefix provided, along with their values.
-- Add Gas
-- - [POST] ( "/gas" ) `{ "gas": "XXX" }`  
+- Add Gas  
+[POST] ( "/gas" ) `{ "gas": "XXX" }`  
 Allows the user to create a new GAS category for use
-- Get Gas 
-- - [GET] ( "/gas" )  
+- Get Gas  
+[GET] ( "/gas" )  
 Retrieves an array of all GAS categories
 
 #### TODO
