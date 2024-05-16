@@ -21,6 +21,31 @@ func cleanup(t *testing.T) {
 	})
 }
 
+func Test_retrieve_results_in_alpha_order(t *testing.T) {
+	gasObj.AddResult("main", "a")
+	gasObj.AddResult("main", "f")
+	res := gasObj.GetResults("main")
+
+	foundA := false
+
+	for x := range res.Results {
+		for y := range res.Results[x].Values {
+			if res.Results[x].Values[y] == "a" {
+				foundA = true
+			} else if res.Results[x].Values[y] == "f" {
+				if !foundA {
+					t.Error("Expected result to contain \"a\" but it did not")
+					return
+				}
+				return
+			}
+		}
+	}
+
+	t.Error("Expected result to contain \"a\" or \"f\" but it did not")
+	cleanup(t)
+}
+
 func Test_retrieve_will_ignore_special_characters(t *testing.T) {
 	gasObj.AddResult("main", "val")
 	res := gasObj.GetResults("ma~in")
