@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"log"
+	"main/gas"
 	"net/http"
 	"strings"
 )
@@ -34,7 +35,7 @@ func AddGas(w http.ResponseWriter, r *http.Request) {
 	}
 
 	gaM.GAS = strings.ToLower(gaM.GAS)
-	GASSES[gaM.GAS] = new(GAS)
+	GASSES[gaM.GAS] = new(gas.GAS)
 
 	w.WriteHeader(http.StatusCreated)
 	_, err = w.Write([]byte("ok"))
@@ -62,14 +63,14 @@ func AddResult(w http.ResponseWriter, r *http.Request) {
 	aM.GAS = strings.ToLower(aM.GAS)
 	aM.VALUE = strings.ToLower(aM.VALUE)
 
-	gas, ok := GASSES[aM.GAS]
+	gasObj, ok := GASSES[aM.GAS]
 	if !ok {
 		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
 		log.Println(err)
 		return
 	}
 
-	gas.AddResult(aM.KEY, aM.VALUE)
+	gasObj.AddResult(aM.KEY, aM.VALUE)
 
 	w.WriteHeader(http.StatusCreated)
 	_, err = w.Write([]byte("ok"))
@@ -88,14 +89,14 @@ func GetResults(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	gas, ok := GASSES[gasQ]
+	gasObj, ok := GASSES[gasQ]
 	if !ok {
 		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusNotFound)
 		log.Println("GAS Not Found")
 		return
 	}
 
-	results := gas.GetResults(keyQ)
+	results := gasObj.GetResults(keyQ)
 	msg, err := json.Marshal(results)
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)

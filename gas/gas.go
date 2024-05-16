@@ -1,6 +1,9 @@
-package main
+package gas
 
-import "sync"
+import (
+	"sync"
+	"unicode"
+)
 
 type GAS struct {
 	Lock sync.RWMutex
@@ -68,7 +71,7 @@ func (t *trie) retrieve(word string) []*TrieResult {
 	return node.collectAll()
 }
 
-type GasResult struct {
+type ResultResponse struct {
 	Query   string        `json:"query"`
 	Results []*TrieResult `json:"results"`
 }
@@ -77,19 +80,42 @@ func (g *GAS) AddResult(key, value string) {
 	g.Lock.Lock()
 	defer g.Lock.Unlock()
 
-	g.Node.insert(key, value)
+	// Cleanup input
+	var Value, Key string
+	for x := range value {
+		if unicode.IsLetter(rune(value[x])) || unicode.IsNumber(rune(value[x])) {
+			Value += string(value[x])
+		}
+	}
+
+	for x := range key {
+		if unicode.IsLetter(rune(key[x])) || unicode.IsNumber(rune(key[x])) {
+			Key += string(key[x])
+		}
+	}
+
+	g.Node.insert(Key, Value)
 }
 
-func (g *GAS) GetResults(query string) GasResult {
+func (g *GAS) GetResults(query string) ResultResponse {
 	g.Lock.RLock()
 	defer g.Lock.RUnlock()
 
-	results := g.Node.retrieve(query)
+	// Cleanup input
+	var Query string
 
-	response := GasResult{
+	for x := range query {
+		if unicode.IsLetter(rune(query[x])) || unicode.IsNumber(rune(query[x])) {
+			Query += string(query[x])
+		}
+	}
+
+	results := g.Node.retrieve(Query)
+
+	rr := ResultResponse{
 		Query:   query,
 		Results: results,
 	}
 
-	return response
+	return rr
 }
